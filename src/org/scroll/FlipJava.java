@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 public class FlipJava {
 
@@ -30,30 +31,31 @@ public static void main(String[] args) throws Exception {
 		driver.findElement(By.xpath("(//button[@type='submit'])[2]")).click();
 		Thread.sleep(3000);
 		
-		WebElement home = driver.findElement(By.xpath("//div[text()='Home']"));
+		WebElement home = driver.findElement(By.xpath("//div[text()='Mobiles']"));
+		home.click();
+		Thread.sleep(1000);
 		
-		Actions a = new Actions(driver);
-		a.moveToElement(home).perform();
-		Thread.sleep(3000);		
+		WebElement act1 = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div[3]/div[2]/div[1]/div/section[2]/div[3]/div[1]/div[2]/div"));
+		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("//a[text()='Home Decor']")).click();
-		Thread.sleep(3000);
-		driver.findElement(By.xpath("//a[contains (text(),'Flipkart SmartBuy W')]")).click();
-		String prWin =driver.getWindowHandle();
-		Set<String> allWin = driver.getWindowHandles(); 
-
-		for(String sWin:allWin) {
-			if(!sWin.equals(allWin)) {
-				driver.switchTo().window(sWin);
-			}
-		}
+		Actions s = new Actions(driver);
 		
-		driver.findElement(By.xpath("//button[text()='GO TO CART']")).click();
-		Thread.sleep(3000);
+		s.dragAndDropBy(act1, -110, 0).perform();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//div[text()='realme']")).click();
+		Thread.sleep(2000);
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollBy(0, 600)");
+		
+		driver.findElement(By.xpath("//div[text()='2 GB']")).click();
+		        
+		System.out.println(driver.findElement(By.xpath("//*[@id=\"container\"]/div/div[3]/div/div[1]/div/div[1]/div/section[1]/div[2]/div[1]")).getText());
+		
 		TakesScreenshot js = (TakesScreenshot)driver;
 		File sa=js.getScreenshotAs(OutputType.FILE);
-		
-		File tar= new File("C:\\Users\\SUDHASEN\\eclipse-workspace\\SeleniumProject\\screenshot\\flipshot.png");
+		String title= driver.getTitle();
+		File tar= new File("C:\\Users\\SUDHASEN\\eclipse-workspace\\SeleniumProject\\screenshot\\newflip.png");
 		FileUtils.copyFile(sa, tar);
+		
 }
 }

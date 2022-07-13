@@ -35,5 +35,7 @@ public class WindowHand {
 	  WebElement price=driver.findElement(By.xpath("//span[text()='$13.99']"));
 	  String text=price.getText();
 	  System.out.println(text);
+	  
+	  
 }
 }
